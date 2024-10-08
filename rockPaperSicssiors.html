@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock-Paper-Sicssiors</title>
+  </head>
+  <body>
+    <h1>This is Rock Paper Sicssiors</h1>
+    <button
+      onclick=" let  ans1 = computerMove() ;
+      if(ans1 === 'rock'){
+        alert('Tie !!! Try Again');
+      }
+      else if( ans1 === 'paper' ){
+        alert('You Win !!!')
+      }
+      else{
+        alert('Computer Wins , You Lose !!!');
+      }
+    "
+    >
+      rock
+    </button>
+
+    <button
+      onclick=" let  ans2 = computerMove() ;
+    if(ans2 === 'paper'){
+      alert('Tie !!! Try Again');
+    }
+    else if(ans === 'sicssors'){
+      alert('You Lose !!!');
+    }
+    else{
+      alert('Computer Wins , You Lose !!!');
+    }
+  "
+    >
+      paper
+    </button>
+
+    <button
+      onclick=" let ans = computerMove() ;
+      if(ans === 'sicssors'){
+        alert('Tie !!! Try Again');
+      }
+      else if(ans === 'paper'){
+        alert('You Win !!!')
+      }
+      else{
+        alert('Computer Wins , You Lose !!!');
+      }
+    "
+    >
+      sicssiors
+    </button>
+    <script>
+      function computerMove() {
+        const randomNumber2 = Math.random();
+        if (randomNumber2 >= 0 && randomNumber2 <= 1 / 3) {
+          return "rock";
+        } else if (randomNumber2 >= 1 / 3 && randomNumber2 <= 2 / 3) {
+          return "paper";
+        } else {
+          return "sicssors";
+        }
+      }
+    </script>
+  </body>
+</html>
