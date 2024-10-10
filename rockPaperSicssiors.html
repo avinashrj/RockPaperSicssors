@@ -4,67 +4,153 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock-Paper-Sicssiors</title>
+    <style>
+      body {
+        background-color: black;
+        color: white;
+        font-family: Arial;
+      }
+      .title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        margin-top: 40px;
+      }
+      .icon {
+        height: 50px;
+      }
+      .move-button {
+        background-color: transparent;
+        border: 3px solid white;
+        width: 120px;
+        height: 120px;
+        border-radius: 60px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .js-result {
+        font-size: 25px;
+        font-weight: bold;
+        margin-top: 50px;
+      }
+      .js-score {
+        margin-top: 50px;
+        margin-bottom: 50px;
+      }
+      .reset-but {
+        background-color: white;
+        border: none;
+        font-size: 15px;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+    </style>
   </head>
   <body>
-    <h1>This is Rock Paper Sicssiors</h1>
-    <button
-      onclick=" let  ans1 = computerMove() ;
-      if(ans1 === 'rock'){
-        alert('Tie !!! Try Again');
-      }
-      else if( ans1 === 'paper' ){
-        alert('You Win !!!')
-      }
-      else{
-        alert('Computer Wins , You Lose !!!');
-      }
-    "
-    >
-      rock
+    <h1 class="title">Rock Paper Sicssiors</h1>
+    <button onclick="playGame('rock')" class="move-button">
+      <img src="images/rock-emoji.png" class="icon" />
     </button>
 
-    <button
-      onclick=" let  ans2 = computerMove() ;
-    if(ans2 === 'paper'){
-      alert('Tie !!! Try Again');
-    }
-    else if(ans === 'sicssors'){
-      alert('You Lose !!!');
-    }
-    else{
-      alert('Computer Wins , You Lose !!!');
-    }
-  "
-    >
-      paper
+    <button onclick="playGame('paper')" class="move-button" ;>
+      <img src="images/paper-emoji.png" class="icon" />
     </button>
 
+    <button onclick="playGame('sicssors')" class="move-button" ;>
+      <img src="images/sicssors-emoji.png" class="icon" />
+    </button>
+    <p class="js-result">Game Result</p>
+    <p class="js-comp"></p>
+    <p class="js-score"></p>
+
     <button
-      onclick=" let ans = computerMove() ;
-      if(ans === 'sicssors'){
-        alert('Tie !!! Try Again');
-      }
-      else if(ans === 'paper'){
-        alert('You Win !!!')
-      }
-      else{
-        alert('Computer Wins , You Lose !!!');
-      }
-    "
+      onclick="score.Wins = 0;
+    score.Losses = 0;
+    score.Ties = 0;
+    alert('score is reseted') ;
+    updateScore();"
+      class="reset-but"
     >
-      sicssiors
+      Reset score
     </button>
     <script>
+      let score = JSON.parse(localStorage.getItem("score")) || {
+        Wins: 0,
+        Losses: 0,
+        Ties: 0,
+      };
+
+      updateScore();
+
       function computerMove() {
         const randomNumber2 = Math.random();
         if (randomNumber2 >= 0 && randomNumber2 <= 1 / 3) {
           return "rock";
         } else if (randomNumber2 >= 1 / 3 && randomNumber2 <= 2 / 3) {
           return "paper";
-        } else {
+        } else if (randomNumber2 >= 2 / 3 && randomNumber2 <= 1) {
           return "sicssors";
         }
       }
+
+      function playGame(playerMove) {
+        const ans = computerMove();
+        let result = "";
+        if (playerMove === "sicssors") {
+          if (ans === "sicssors") {
+            result = "Tie";
+          } else if (ans === "paper") {
+            result = "you win";
+          } else {
+            result = "computer win";
+          }
+        } else if (playerMove === "rock") {
+          if (ans === "rock") {
+            result = "Tie";
+          } else if (ans === "sicssors") {
+            result = "you win";
+          } else {
+            result = "computer win";
+          }
+        } else {
+          if (ans === "paper") {
+            result = "Tie";
+          } else if (ans === "rock") {
+            result = "you win";
+          } else {
+            result = "computer win";
+          }
+        }
+
+        if (result === "you win") score.Wins += 1;
+        else if (result === "computer win") score.Losses += 1;
+        else score.Ties += 1;
+
+        localStorage.setItem("score", JSON.stringify(score));
+        updateScore();
+        document.querySelector(".js-result").innerHTML = result;
+        document.querySelector(
+          ".js-comp"
+        ).innerHTML = `You <img src="images/${playerMove}-emoji.png" class="icon" />
+      <img src="images/${ans}-emoji.png" class="icon" />Computer`;
+      }
+
+      function updateScore() {
+        document.querySelector(
+          ".js-score"
+        ).innerHTML = `Wins : ${score.Wins} Losses : ${score.Losses} Ties : ${score.Ties}`;
+      }
+
+      // function updateResult() {
+      //   document.querySelector(".js-result").innerHTML = result;
+      // }
+      // function updateComp() {
+      //   document.querySelector(
+      //     ".js-comp"
+      //   ).innerHTML = `You <img src="images/${playerMove}-emoji.png" class="icon" />
+      // <img src="images/${ans}-emoji.png" class="icon" />Computer`;
+      // }
     </script>
   </body>
 </html>
